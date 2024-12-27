@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Siddhant40/javafile.git' // Replace with your repo URL
+                git branch: 'main', url:'https://github.com/Siddhant40/javafile.git' // Replace with your repo URL
             }
         }
         stage('Build') {
@@ -20,9 +20,22 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') { // Replace with your SonarQube server name
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=SampleMavenProject'
+                    environment {
+                        SONAR_TOKEN = credentials('SonarQube')
+                    }
+                    steps {
+                        // Debug environment variables and print current directory
+                                       
+                        // Use the full path for sonar-scanner.bat
+                        bat '''
+                          -Dsonar.projectKey=java-maven ^
+                          -Dsonar.projectname=java-maven ^
+                          -Dsonar.sources=. ^
+                          -Dsonar.host.url=http://localhost:9000 ^
+                          -Dsonar.token=%SONAR_TOKEN% ^
+                          -Dsonar.verbose=true
+                        '''
+                    }
                 }
             }
         }
