@@ -15,11 +15,11 @@ pipeline {
         stage('Build and Analyze') {
             steps {
                 bat """
-                    mvn clean verify sonar:sonar -X^
+                    mvn clean verify sonar:sonar -X ^
                     -Dsonar.projectKey=java-maven ^
                     -Dsonar.projectName=java-maven ^
                     -Dsonar.host.url=http://localhost:9000 ^
-                    -Dsonar.token=%SONAR_TOKEN% ^
+                    -Dsonar.login=%SONAR_TOKEN% ^
                     -Dsonar.verbose=true
                 """
             }
