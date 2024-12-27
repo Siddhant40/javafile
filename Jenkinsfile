@@ -21,6 +21,7 @@ pipeline {
                     mvn clean verify sonar:sonar -X ^
                     -Dsonar.projectKey=java-maven ^
                     -Dsonar.projectName=java-maven ^
+                    -Dsonar.sources=. ^
                     -Dsonar.host.url=http://localhost:9000 ^
                     -Dsonar.token=%SONAR_TOKEN% ^
                     -Dsonar.verbose=true
