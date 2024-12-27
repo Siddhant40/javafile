@@ -30,7 +30,7 @@ pipeline {
             steps {
                 bat """
                      "%SONAR_SCANNER_PATH%"^
-                    // sonar-scanner ^
+                  
                     -Dsonar.projectKey=java-maven ^
                     -Dsonar.projectName=java-maven ^
                     -Dsonar.sources=. ^
