@@ -6,38 +6,45 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url:'https://github.com/Siddhant40/javafile.git' // Replace with your repo URL
+                git branch: 'main', url: 'https://github.com/Siddhant40/javafile.git' // Replace with your repo URL
             }
         }
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
         stage('SonarQube Analysis') {
-                    environment {
-                        SONAR_TOKEN = credentials('SonarQube')
-                    }
-                    steps {
-                        // Debug environment variables and print current directory
-                                       
-                        // Use the full path for sonar-scanner.bat
-                        bat '''
-                          -Dsonar.projectKey=java-maven ^
-                          -Dsonar.projectname=java-maven ^
-                          -Dsonar.sources=. ^
-                          -Dsonar.host.url=http://localhost:9000 ^
-                          -Dsonar.token=%SONAR_TOKEN% ^
-                          -Dsonar.verbose=true
-                        '''
-                    }
-                }
+            environment {
+                SONAR_TOKEN = credentials('SonarQube') // Add SonarQube token credential in Jenkins
             }
+            steps {
+                bat """
+                    sonar-scanner ^
+                    -Dsonar.projectKey=java-maven ^
+                    -Dsonar.projectName=java-maven ^
+                    -Dsonar.sources=. ^
+                    -Dsonar.host.url=http://localhost:9000 ^
+                    -Dsonar.login=%SONAR_TOKEN% ^
+                    -Dsonar.verbose=true
+                """
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Build and analysis completed successfully!'
+        }
+        failure {
+            echo 'Build or analysis failed!'
+        }
+        always {
+            echo 'This will always run, regardless of success or failure.'
         }
     }
 }
