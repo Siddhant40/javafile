@@ -1,30 +1,22 @@
 package com.example;
 
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+public class Fibonacci {
 
-/**
- * Main application class.
- */
-public class App {
     public static void main(String[] args) {
-        String message = "Hello, Maven with Jenkins!";
-        if (StringUtils.isNotBlank(message)) {
-            System.out.println("Message: " + message);
-        } else {
-            System.out.println("Message is blank.");
-        }
-    }
+        int n = 10;  // Number of terms in Fibonacci series
+        int first = 0, second = 1;
+        
+        System.out.println("Fibonacci Series up to " + n + " terms:");
 
-    /**
-     * Unit test for the App class.
-     */
-    public static class AppTest {
-        @Test
-        public void testApp() {
-            String testString = "Hello, Test!";
-            assertTrue("String should not be empty", testString.length() > 0);
+        // Print the first two terms of the Fibonacci series
+        System.out.print(first + " " + second + " ");
+
+        // Calculate and print the rest of the terms
+        for (int i = 3; i <= n; i++) {
+            int nextTerm = first + second;
+            System.out.print(nextTerm + " ");
+            first = second;
+            second = nextTerm;
         }
     }
 }
