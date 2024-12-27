@@ -1,12 +1,12 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.8.1' // Use the Maven name configured in Jenkins
+        maven 'Maven' // Name you configured in Jenkins
     }
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Siddhant40/javafile.git'
+                git 'https://github.com/Siddhant40/javafile.git' // Replace with your repo URL
             }
         }
         stage('Build') {
@@ -21,8 +21,8 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') { // SonarQube server name in Jenkins
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=<project-key>'
+                withSonarQubeEnv('SonarQube') { // Replace with your SonarQube server name
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=SampleMavenProject'
                 }
             }
         }
