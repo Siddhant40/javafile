@@ -3,6 +3,10 @@ pipeline {
     tools {
         maven 'Maven' // Name you configured in Jenkins
     }
+    environment {
+       
+        SONAR_SCANNER_PATH = 'C:\\Users\\91844\\Downloads\\sonar-scanner-cli-6.2.1.4610-windows-x64\\sonar-scanner-6.2.1.4610-windows-x64\\bin\\sonar-scanner.bat'  // Add this line
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -25,7 +29,8 @@ pipeline {
             }
             steps {
                 bat """
-                    sonar-scanner ^
+                     "%SONAR_SCANNER_PATH%"^
+                    // sonar-scanner ^
                     -Dsonar.projectKey=java-maven ^
                     -Dsonar.projectName=java-maven ^
                     -Dsonar.sources=. ^
