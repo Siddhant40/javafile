@@ -18,6 +18,7 @@ pipeline {
             }
             steps {
                 bat """
+                    %SONAR_SCANNER_PATH%^
                     mvn clean verify sonar:sonar -X ^
                     -Dsonar.projectKey=java-maven ^
                     -Dsonar.projectName=java-maven ^
